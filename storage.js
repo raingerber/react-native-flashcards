@@ -1,11 +1,11 @@
 import { AsyncStorage } from 'react-native'
 
-const KEY = 'flashcards-storage-key'
-
+const STORAGE_KEY = 'flashcards-storage-key'
+AsyncStorage.clear()
 const newDeck = (title, questions = []) => ({ title, questions })
 
 const getDecks = () => {
-  return AsyncStorage.getItem(KEY).then((decks) => JSON.parse(decks) || {})
+  return AsyncStorage.getItem(STORAGE_KEY).then((decks) => JSON.parse(decks) || {})
 }
 
 const getDeck = (title) => {
@@ -25,7 +25,7 @@ const addCardToDeck = (title, card) => {
 }
 
 const saveDeck = (title, deck) => {
-  return AsyncStorage.mergeItem(KEY, JSON.stringify({ [title]: deck }))
+  return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [title]: deck }))
     .then(() => getDecks())
 }
 
