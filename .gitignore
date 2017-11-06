@@ -1,4 +1,4 @@
 node_modules/
-.expog
+.expo/
 npg-debug.*
 *.log
