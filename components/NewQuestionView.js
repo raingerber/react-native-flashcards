@@ -1,15 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {View, Text, TextInput, StyleSheet} from 'react-native'
+import {View, TextInput} from 'react-native'
 
 import {addCardToDeck} from '../actions/index'
 
+import styles from '../styles'
 import Button from './Button'
 
 class NewQuestionView extends React.Component {
-  state = {
-    question: '',
-    answer: ''
+  constructor (props) {
+    super(props)
+    this.state = {
+      question: '',
+      answer: ''
+    }
   }
 
   onPress () {
@@ -27,7 +31,7 @@ class NewQuestionView extends React.Component {
           value={this.state.question}
           placeholder='Question'
           autoCorrect={false}
-          autoFocus={true} />
+          autoFocus />
         <StyledInput
           onChangeText={(answer) => this.setState({answer})}
           value={this.state.answer}
@@ -43,13 +47,5 @@ class NewQuestionView extends React.Component {
 }
 
 const StyledInput = (props) => <TextInput {...props} style={styles.input} />
-
-const styles = StyleSheet.create({
-  input: {
-    margin: 40,
-    marginLeft: 20,
-    marginRight: 20
-  }
-})
 
 export default connect()(NewQuestionView)

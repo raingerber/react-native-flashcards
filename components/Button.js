@@ -1,24 +1,20 @@
 import React from 'react'
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import {TouchableOpacity, Text} from 'react-native'
+
+import styles from '../styles'
 
 function Button ({text, ...props}) {
   return (
-    <TouchableOpacity {...props} style={styles.btn}>
-      <Text>{text}</Text>
+    <TouchableOpacity {...props} style={[props.style, styles.btn]}>
+      {text
+        ? <Text style={styles.fontMedium}>{text}</Text>
+        : props.children}
     </TouchableOpacity>
   )
 }
 
-const styles = StyleSheet.create({
-  btn: {
-    backgroundColor: '#E53224',
-    padding: 10,
-    paddingLeft: 50,
-    paddingRight: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10
-  }
-})
+Button.defaultProps = {
+  style: {}
+}
 
 export default Button

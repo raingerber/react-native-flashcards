@@ -1,24 +1,25 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import {connect} from 'react-redux'
+import {View, Text} from 'react-native'
 
+import styles from '../styles'
 import Button from './Button'
 
-const getTotal = (results) => results.reduce((acc, x) => acc + (x ? 1 : 0), 0)
-
-function QuizDoneView ({results, totalPossible, navigation}) {
-  // console.log(navigation)
+function QuizDoneView ({total, totalPossible, navigation}) {
   return (
-    <View>
-      <Text>Quiz Results:</Text>
-      <Text>{`${getTotal(results)} of ${totalPossible}`}</Text>
-      <Button
-        text='Restart Quiz'
-        onPress={() => navigation.goBack(null)}/>
-      <Button
-        text='Back to Deck'
-        onPress={() => false}/>
+    <View style={styles.center}>
+      <View style={styles.center}>
+        <Text style={styles.fontLarge}>Quiz Results:</Text>
+        <Text style={[styles.fontMedium, {marginTop: 10}]}>{`${total} of ${totalPossible} correct`}</Text>
+      </View>
+      <View style={[styles.center, styles.bottom]}>
+        <Button
+          text='Restart Quiz'
+          onPress={() => navigation.goBack(null)} />
+        <Button
+          text='Back to Deck'
+          onPress={() => false} />
+      </View>
     </View>
   )
 }

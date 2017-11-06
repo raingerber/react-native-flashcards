@@ -1,11 +1,14 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import {View, Text, TextInput} from 'react-native'
 
 import Button from './Button'
 
 class NewDeckView extends React.Component {
-  state = {
-    title: ''
+  constructor (props) {
+    super(props)
+    this.state = {
+      title: ''
+    }
   }
 
   render () {
@@ -16,7 +19,7 @@ class NewDeckView extends React.Component {
           value={this.state.title}
           placeholder='Deck Title'
           autoCorrect={false}
-          autoFocus={true}
+          autoFocus
         />
         <Button>
           <Text>Submit</Text>
