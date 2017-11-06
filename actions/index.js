@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native'
-
 import {
   GET_DECK,
   GET_DECKS,
