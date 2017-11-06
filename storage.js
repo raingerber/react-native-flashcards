@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native'
 
 const STORAGE_KEY = 'flashcards-storage-key'
-AsyncStorage.clear()
+
 const newDeck = (title, questions = []) => ({ title, questions })
 
 const getDecks = () => {
