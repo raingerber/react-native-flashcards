@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 
-const STORAGE_KEY = 'flashcards-storage-key'
+const STORAGE_KEY = 'react-native-flashcards:storage-key'
 
 const newDeck = (title, questions = []) => ({ title, questions })
 
