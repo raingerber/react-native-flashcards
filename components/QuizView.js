@@ -6,18 +6,29 @@ import styles from '../styles'
 import Button from './Button'
 import QuizDoneView from './QuizDoneView'
 
+// count the total number of correct answers
 const getTotal = (results) => results.reduce((acc, x) => acc + (x ? 1 : 0), 0)
-
-// const getCounter = (index, total) => ` ${this.state.questionNum + 1} of ${questions.length}`
 
 class QuizView extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
+    this.state = this.getDefaultState()
+  }
+
+  getDefaultState () {
+    return {
       questionNum: 0,
       showQuestion: true,
-      results: props.questions.map(() => false)
+      results: this.props.questions.map(() => false)
     }
+  }
+
+  restartQuiz () {
+    this.setState(this.getDefaultState())
+  }
+
+  goBack () {
+    this.props.navigation.goBack(null)
   }
 
   getCurrentQuestion () {
@@ -27,6 +38,7 @@ class QuizView extends React.Component {
   saveResult (result) {
     this.setState((state) => {
       const results = state.results.concat()
+      // we record correct/incorrect answers as true/false in this array
       results[this.state.questionNum] = result
       return {
         ...state,
@@ -46,21 +58,21 @@ class QuizView extends React.Component {
   }
 
   render () {
-    // console.log(this.state)
     const {questions} = this.props
     if (this.state.questionNum >= questions.length) {
       return (
         <QuizDoneView
           total={getTotal(this.state.results)}
           totalPossible={questions.length}
-          navigation={this.props.navigation}
-        />
+          restartQuiz={this.restartQuiz.bind(this)}
+          goBack={this.goBack.bind(this)}
+      />
       )
     }
 
     const {title} = this.props
     const {showQuestion} = this.state
-    const current = this.getCurrentQuestion()
+    const currentQuestion = this.getCurrentQuestion()
     const subHeader = (showQuestion ? 'Question' : 'Answer') + (
       ` ${this.state.questionNum + 1} of ${questions.length}`
     )
@@ -70,9 +82,9 @@ class QuizView extends React.Component {
         <View style={styles.center}>
           <Text style={[{flex: 1, padding: 5}, styles.fontMedium]}>{title}</Text>
           <Text style={{flex: 1}}>{subHeader}</Text>
-          <View style={[styles.center, {flex: 3, backgroundColor: 'blue'}]}>
-            <Text style={[styles.fontMedium, {backgroundColor: 'red'}]}>
-              {showQuestion ? current.question : current.answer}
+          <View style={[styles.center, {flex: 3}]}>
+            <Text style={styles.fontMedium}>
+              {showQuestion ? currentQuestion.question : currentQuestion.answer}
             </Text>
           </View>
         </View>
@@ -97,28 +109,8 @@ class QuizView extends React.Component {
   }
 }
 
-// <Text>{current.question}</Text>
-
-// function QuizQuestion (props) {
-//   return (
-//     <View style={[styles.center, styles.bottom]}>
-//       <Button
-//         text='Show Answer'
-//         onPress={() => this.setState({showQuestion: false})} />
-//     </View>
-//   )
-// }
-
-// function AnswerQuestion (props) {
-//   return (
-//     <View style={styles.center}>
-
-//     </View>
-//   )
-// }
-
-const mapStateToProps = (state, {navigation}) => {
-  const {title, questions} = navigation.state.params.deck
+const mapStateToProps = ({decks}, {navigation}) => {
+  const {title, questions} = decks[navigation.state.params.deckKey]
   return {title, questions}
 }
 

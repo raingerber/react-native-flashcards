@@ -4,6 +4,7 @@ import {StackNavigator} from 'react-navigation'
 
 import {getDecks} from '../actions/index'
 
+import Loader from './Loader'
 import DeckListView from './DeckListView'
 import DeckView from './DeckView'
 import NewDeckView from './NewDeckView'
@@ -20,9 +21,24 @@ const Navigator = StackNavigator({
   initialRouteName: 'DeckListView'
 })
 
-function Main (props) {
-  props.dispatch(getDecks())
-  return <Navigator />
+class MainView extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      decksHaveLoaded: false
+    }
+  }
+
+  componentDidMount () {
+    this.props.dispatch(getDecks())
+      .then(() => this.setState({decksHaveLoaded: true}))
+  }
+
+  render () {
+    return this.state.decksHaveLoaded
+      ? <Navigator />
+      : <Loader />
+  }
 }
 
-export default connect()(Main)
+export default connect()(MainView)

@@ -3,9 +3,9 @@ import {TouchableOpacity, Text} from 'react-native'
 
 import styles from '../styles'
 
-function Button ({text, ...props}) {
+function Button ({text, style, ...props}) {
   return (
-    <TouchableOpacity {...props} style={[props.style, styles.btn]}>
+    <TouchableOpacity {...props} style={[style, styles.btn]}>
       {text
         ? <Text style={styles.fontMedium}>{text}</Text>
         : props.children}

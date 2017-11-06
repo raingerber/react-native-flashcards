@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {View, TextInput} from 'react-native'
+import {View} from 'react-native'
 
 import {addCardToDeck} from '../actions/index'
 
-import styles from '../styles'
 import Button from './Button'
+import StyledTextInput from './StyledTextInput'
 
 class NewQuestionView extends React.Component {
   constructor (props) {
@@ -18,25 +18,22 @@ class NewQuestionView extends React.Component {
 
   onPress () {
     const {question, answer} = this.state
-    const {title} = this.props.navigation.state.params.deck
-    this.props.dispatch(addCardToDeck(title, {question, answer}))
+    this.props.dispatch(addCardToDeck(this.props.deckKey, {question, answer}))
     this.props.navigation.goBack(null)
   }
 
   render () {
     return (
       <View>
-        <StyledInput
+        <StyledTextInput
           onChangeText={(question) => this.setState({question})}
           value={this.state.question}
           placeholder='Question'
-          autoCorrect={false}
           autoFocus />
-        <StyledInput
+        <StyledTextInput
           onChangeText={(answer) => this.setState({answer})}
           value={this.state.answer}
           placeholder='Answer'
-          autoCorrect={false}
           autoFocus={false} />
         <Button
           text='Submit'
@@ -46,6 +43,8 @@ class NewQuestionView extends React.Component {
   }
 }
 
-const StyledInput = (props) => <TextInput {...props} style={styles.input} />
+const mapStateToProps = (state, {navigation}) => {
+  return {deckKey: navigation.state.params.deckKey}
+}
 
-export default connect()(NewQuestionView)
+export default connect(mapStateToProps)(NewQuestionView)

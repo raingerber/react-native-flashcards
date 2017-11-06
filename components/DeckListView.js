@@ -1,9 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {FlatList, View, Text} from 'react-native'
-
-// TODO remove setCurrentDeck stuff?
-// import {setCurrentDeck} from '../actions/index'
+import {FlatList, View, Text, StyleSheet} from 'react-native'
 
 import styles from '../styles'
 import Button from './Button'
@@ -17,21 +14,28 @@ function DeckListView ({decks, navigation}) {
   }
 
   return (
-    <View style={{flex: 1}}>
-      <FlatList
-        data={list}
-        keyExtractor={({key}) => key}
-        renderItem={({item: {key, deck}}) => {
-          const onPress = () => navigation.navigate('DeckView', {key})
-          return <DeckListItem {...deck} onPress={onPress} />
-        }}
-        style={{flex: 1, marginBottom: 10}}
-      />
-      <Button
-        onPress={() => navigation.navigate('NewDeckView')}
-        style={{marginTop: 10, marginBottom: 10}}>
-        <Text>New Deck</Text>
-      </Button>
+    <View style={{flex: 1, justifyContent: 'space-between'}}>
+      {list.length ? (
+        <FlatList
+          data={list}
+          renderItem={({item: {key, deck}}) => {
+            const onPress = () => navigation.navigate('DeckView', {deckKey: key})
+            return <DeckListItem {...deck} onPress={onPress} />
+          }}
+        />
+      ) : (
+        <View style={styles.center}>
+          <Text style={{margin: 10}}>
+            Please make some decks!
+          </Text>
+        </View>
+      )}
+
+      <View style={localStyles.newDeckButtonContainer}>
+        <Button onPress={() => navigation.navigate('NewDeckView')}>
+          <Text>New Deck</Text>
+        </Button>
+      </View>
     </View>
   )
 }
@@ -48,5 +52,13 @@ function DeckListItem ({title, questions, onPress}) {
 }
 
 const mapStateToProps = ({decks}) => ({decks})
+
+const localStyles = StyleSheet.create({
+  newDeckButtonContainer: {
+    paddingTop: 20,
+    paddingBottom: 12,
+    backgroundColor: '#9a9fa8'
+  }
+})
 
 export default connect(mapStateToProps)(DeckListView)
