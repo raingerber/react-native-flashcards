@@ -1,57 +1,30 @@
 import {
-  GET_DECK,
   GET_DECKS,
   SAVE_DECK_TITLE,
-  ADD_CARD_TO_DECK,
-  SET_CURRENT_DECK
+  ADD_CARD_TO_DECK
 } from '../actions/types'
 
 export default function (state = {decks: {}, current: {}}, action) {
-  // TODO need to make sure that state.decks exists
-  if (action.type === GET_DECK) {
+  if (action.type === GET_DECKS) {
     return {
       ...state,
-      current: state.decks[action.key] || {}
+      decks: action.decks
     }
   }
 
-  if (action.type === SET_CURRENT_DECK) {
+  if (action.type === SAVE_DECK_TITLE) {
     return {
       ...state,
-      current: action.deck || {}
+      decks: action.decks
     }
   }
 
-  if (action.decks) {
-
+  if (action.type === ADD_CARD_TO_DECK) {
     return {
       ...state,
-      decks: action.decks || {}
+      decks: action.decks
     }
   }
 
   return state
-
-  // if (action.type === GET_DECKS) {
-  //   return {
-  //     ...state,
-  //     decks: action.decks || {}
-  //   }
-  // }
-  //
-  // if (action.type === SAVE_DECK_TITLE) {
-  //   return {
-  //     ...state,
-  //     decks: action.decks
-  //   }
-  // }
-  //
-  // if (action.type === ADD_CARD_TO_DECK) {
-  //   return {
-  //     ...state,
-  //     decks: action.decks || {}
-  //   }
-  // }
-
-  // return state
 }
