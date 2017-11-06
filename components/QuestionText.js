@@ -3,7 +3,7 @@ import {View, Text} from 'react-native'
 
 import styles from '../styles'
 
-const word = (num) => 'question' + (num === 1 ? '' : 's')
+const word = (num) => 'card' + (num === 1 ? '' : 's')
 
 function QuestionText ({num}) {
   return (
