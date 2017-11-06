@@ -24,6 +24,7 @@ function clearLocalNotification () {
     .then(() => Notifications.cancelAllScheduledNotificationsAsync())
 }
 
+// date for next day at 8:00
 function getDate () {
   const d = new Date()
   d.setDate(d.getDate() + 1)
