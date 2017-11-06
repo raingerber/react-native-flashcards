@@ -1,7 +1,9 @@
 # Mobile Flashcards Project in React Native
 
 Use these terminal commands to get the project running:
+
 * `npm install`
+
 * `npm start`
 
 ## NOTES
